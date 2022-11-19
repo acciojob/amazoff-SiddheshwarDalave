@@ -18,10 +18,31 @@ public class OrderRepository {
     }
 
     public void addPartner(String partnerId) {
-        deliveryPartnerHashMap.put(partnerId,null);
+        DeliveryPartner deliveryPartner=new DeliveryPartner(partnerId);
+        deliveryPartner.setNumberOfOrders(0);
+        int noOfOrders=0;
+        for(String pId: orderDeliveryPartnerHashMap.values()){
+            if(pId==partnerId){
+                noOfOrders++;
+            }
+        }
+        deliveryPartner.setNumberOfOrders(noOfOrders);
+        deliveryPartnerHashMap.put(partnerId,deliveryPartner);
     }
 
     public void addOrderPartnerPair(String orderId, String partnerId) {
+
+//        for(DeliveryPartner deliveryPartner:deliveryPartnerHashMap.values()){
+//            if(deliveryPartner==null){
+//                deliveryPartner.setNumberOfOrders(1);
+//                deliveryPartnerHashMap.put(partnerId,deliveryPartner);
+//                break;
+//            }
+//          if(deliveryPartner.getId()==partnerId){
+//               deliveryPartner.setNumberOfOrders(deliveryPartner.getNumberOfOrders()+1);
+//               deliveryPartnerHashMap.put(partnerId,deliveryPartner);
+//          }
+//        }
         orderDeliveryPartnerHashMap.put(orderId,partnerId);
     }
 
@@ -37,7 +58,12 @@ public class OrderRepository {
     }
 
     public DeliveryPartner getPartnerById(String partnerId) {
-        return deliveryPartnerHashMap.get(partnerId);
+        for(String str:deliveryPartnerHashMap.keySet()){
+            if(str==partnerId){
+                return deliveryPartnerHashMap.get(partnerId);
+            }
+        }
+        return null;
     }
 
     public Integer getOrderCountByPartnerId(String partnerId) {
@@ -51,9 +77,10 @@ public class OrderRepository {
 
     public List<String> getOrdersByPartnerId(String partnerId) {
         List<String> ordersListbyPartnerId=new ArrayList<>();
-        for(Map.Entry<String,String> map:orderDeliveryPartnerHashMap.entrySet()){
-            if(partnerId==map.getValue()){
-                ordersListbyPartnerId.add(map.getValue());
+       // for(Map.Entry<String,String> map:orderDeliveryPartnerHashMap.entrySet()){
+        for(String s:orderDeliveryPartnerHashMap.values()){
+            if(partnerId==s){
+                ordersListbyPartnerId.add(orderDeliveryPartnerHashMap.get(partnerId));
             }
         }
         return ordersListbyPartnerId;

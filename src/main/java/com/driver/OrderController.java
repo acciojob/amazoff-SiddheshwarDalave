@@ -22,10 +22,7 @@ public class OrderController {
     OrderService orderService;
 
     //test
-    @GetMapping("/getcheck")
-    public String print(){
-        return "printing the thing";
-    }
+
     @PostMapping("/add-order")
     public ResponseEntity<String> addOrder(@RequestBody Order order){
             orderService.addOrder(order);
@@ -110,7 +107,7 @@ public class OrderController {
         return new ResponseEntity<>(countOfOrders, HttpStatus.CREATED);
     }
 
-    @GetMapping("/get-last-delivery-time")
+    @GetMapping("/get-last-delivery-time/{partnerId}")
     public ResponseEntity<String> getLastDeliveryTimeByPartnerId(@PathVariable String partnerId){
         String time = orderService.getLastDeliveryTimeByPartnerId(partnerId);
 
