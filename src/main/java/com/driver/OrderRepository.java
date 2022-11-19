@@ -134,7 +134,7 @@ public class OrderRepository {
                 orderHashMap.remove(orderId);
             }
         }
-
+//comment
         for(String ordId: orderDeliveryPartnerHashMap.keySet()){
             if(ordId==orderId){
                 orderDeliveryPartnerHashMap.remove(orderId);
